@@ -1,15 +1,22 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const Image = require("./models/Image"); // Adjust path if needed
+const Image = require("./models/Image"); 
 
 const app = express();
 const PORT = 8000;
 
 // Connect to MongoDB
-mongoose
-  .connect("mongodb://127.0.0.1:27017/my_image_db") // Replace with your MongoDB connection string
-  .then(() => console.log("Connected to MongoDB!"))
-  .catch((err) => console.error("Could not connect to MongoDB...", err));
+const connectToDatabase = async () => {
+  try {
+    
+    await mongoose.connect('mongodb://127.0.0.1:27017/my_image_db'); 
+    console.log('Connected to MongoDB!');
+  } catch (err) {
+    console.error('Could not connect to MongoDB...', err);
+  }
+};
+
+connectToDatabase();
 
 // Routes
 
