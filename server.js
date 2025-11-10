@@ -44,5 +44,21 @@ app.get("/api/images/:_id", async (req, res) => {
   }
 });
 
+// Route for delete image by id
+app.delete('/api/images/:_id', async (req, res) => {
+  try {
+    const id = req.params._id;
+    const deletedImage = await Image.findByIdAndDelete(id); // Find and delete image by ID
+
+    if (!deletedImage) {
+      return res.status(404).json({ message: 'Image not found' });
+    }
+
+    return res.json({ message: 'Image deleted successfully', deletedImage });
+  } catch (error) {
+    return res.status(500).json({ message: 'Error deleting image', error });
+  }
+}); 
+
 // Start server
 app.listen(PORT, console.log(`Server Started at PORT:${PORT}`));
