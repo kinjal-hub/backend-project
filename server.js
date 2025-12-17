@@ -18,9 +18,9 @@ const connectToDatabase = async () => {
 
 connectToDatabase();
 
-// Middleware to handle timeouts (optional, but recommended for cleaner code)
+// Middleware  
 const timeoutMiddleware = (req, res, next) => {
-  req.setTimeout(5000, () => { // 5 seconds timeout
+  req.setTimeout(10000, () => { 
     if (!res.headersSent) {
       res.status(503).json({ message: "Request timed out" });
     }
@@ -35,7 +35,7 @@ app.get("/api/images", async (req, res) => {
     if (!res.headersSent) {
       return res.status(503).json({ message: "Request timed out" });
     }
-  }, 5000); // 5 seconds timeout
+  }, 10000); // 10 seconds timeout
 
   try {
     const images = await Image.find({}); // Find all images
@@ -53,18 +53,18 @@ app.get("/api/images/:_id", async (req, res) => {
     if (!res.headersSent) {
       return res.status(503).json({ message: "Request timed out" });
     }
-  }, 5000); // 5 seconds timeout
+  }, 10000); // 10 seconds timeout
 
   try {
     const id = req.params._id;
-    const image = await Image.findById(id); // Find image by ID
-    clearTimeout(timeout); // Clear timeout if operation completes
+    const image = await Image.findById(id); 
+    clearTimeout(timeout); 
     if (!image) {
       return res.status(404).json({ message: "Image not found" });
     }
     return res.json(image);
   } catch (error) {
-    clearTimeout(timeout); // Clear timeout on error
+    clearTimeout(timeout); 
     return res.status(500).json({ message: "Error retrieving image", error });
   }
 });
@@ -75,18 +75,18 @@ app.delete('/api/images/:_id', async (req, res) => {
     if (!res.headersSent) {
       return res.status(503).json({ message: "Request timed out" });
     }
-  }, 5000); // 5 seconds timeout
+  }, 10000); // 10 seconds timeout
 
   try {
     const id = req.params._id;
     const deletedImage = await Image.findByIdAndDelete(id); // Find and delete image by ID
-    clearTimeout(timeout); // Clear timeout if operation completes
+    clearTimeout(timeout); 
     if (!deletedImage) {
       return res.status(404).json({ message: 'Image not found' });
     }
     return res.json({ message: 'Image deleted successfully', deletedImage });
   } catch (error) {
-    clearTimeout(timeout); // Clear timeout on error
+    clearTimeout(timeout); 
     return res.status(500).json({ message: 'Error deleting image', error });
   }
 }); 
