@@ -1,7 +1,7 @@
 const express = require("express");
 const connectToDatabase = require("./config/db");
 const imageRoutes = require("./Routes/imageRoutes");
-const timeoutMiddleware = require("./Middleware/settimeout")
+
 require("dotenv").config();
 
 
@@ -15,6 +15,6 @@ app.use(express.json());
 
 
 // Routes
-app.use("/api/images", timeoutMiddleware, imageRoutes);
+app.use("/api/images", imageRoutes);
 
 app.listen(PORT, () => console.log(`Server Started at PORT:${PORT}`));

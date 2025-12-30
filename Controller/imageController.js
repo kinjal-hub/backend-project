@@ -4,7 +4,7 @@ const Image = require("../models/Image");
 // Route for get all images
 const getAllImages = async (req, res) => {
   try {
-    const { title, fromDate, toDate } = req.body;
+    const { title, fromDate, toDate } = req.body || {};
     
     const allImages = await Image.find({});
 
